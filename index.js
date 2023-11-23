@@ -1,60 +1,41 @@
-
-// const express = require('express');
-
-// console.log("hello moye moye")
-
-// const server = express();
-// server.listen(8080);
-
-const http = require('http');
 const fs = require('fs');
-
 const index = fs.readFileSync('index.html', 'utf-8');
 const data = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
 const products = data.products;
 
 
-const server = http.createServer((req, res) => {
-    console.log(req.url, req.method)
+const express = require('express');
+const server = express();
 
-    if(req.url.startsWith('/product')){
-        const id = req.url.split('/')[2]
-        const product = products.find(p=>p.id===(+id))
-        console.log(product)
-        res.setHeader('Content-Type', 'text/html');
-              let modifiedIndex = index.replace('**title**', product.title)
-              .replace('**url**', product.thumbnail)
-              .replace('**price**', product.price)
-              .replace('**rating**', product.rating)
-              res.end(modifiedIndex);
-              return;
-      }
-
-    //   case '/product':
-    //     res.setHeader('Content-Type', 'text/html');
-    //     let modifiedIndex = index.replace('**title**', product.title)
-    //         .replace('**url**', product.thumbnail)
-    //         .replace('**price**', product.price)
-    //         .replace('**rating**', product.rating)
-    //     res.end(modifiedIndex);
-    //     break;
-    switch (req.url) {
-        case '/':
-            res.setHeader('Content-Type', 'text/html');
-            res.end(index);
-            break;
-        case '/api':
-            res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify(data));
-            break;
-        default:
-            res.writeHead(404);
-            res.end();
-    }
-
-    console.log("server start");
+server.get('/', (req,res) => {
+    res.json({type:'GET'})
+})
+server.post('/', (req,res) => {
+    res.json({type:'POST'})
+})
+server.put('/', (req,res) => {
+    res.json({type:'PUT'})
+})
+server.delete('/', (req,res) => {
+    res.json({type:'DELETE'})
+})
+server.patch('/', (req,res) => {
+    res.json({type:'PATCH'})
+})
 
 
-});
 
-server.listen(8080);
+
+
+server.get('/', (req,res) => {
+    //res.send('<h1>Hello</h1>')
+    //res.sendFile('D:\Shubham\Node\node-app\index.html')
+    // res.json(products);
+    res.sendStatus(404);
+})
+
+
+server.listen(8080, () => {
+    console.log("express server started");
+})
+
