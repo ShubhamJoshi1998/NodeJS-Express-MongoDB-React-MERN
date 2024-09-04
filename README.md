@@ -12,3 +12,23 @@
 - Running any JavaScript file from node using `node filename.js`
 - **Modules** are basic containers in Node/JavaScript system. 1 file can be one module in Javascript.
 - Two type of Module Systems in node JS are - **CommonJS** module and **ES** Modules.
+
+  **- CommonJS Module** 
+```javascript
+//lib.js
+exports.sum = function(){}
+
+//index.js
+const module = require('./lib.js')
+module.sum();
+```
+**- ES Module**
+
+```javascript
+//lib.js
+export {sum}
+
+//index.js
+import {sum} from './lib.js'
+	
+```
